@@ -17,6 +17,7 @@ let score = 0;
 let gameOver = false;
 let ravens = [];
 let explosions = [];
+let particles = [];
 
 function drawScore() {
   ctx.fillStyle = "black";
@@ -31,10 +32,10 @@ function gameOverScreen() {
   ctx.fillStyle = "black";
   ctx.font = "100px Arial";
   ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
-    ctx.textAlign = "center";
-    ctx.fillStyle = "white";
-    ctx.font = "100px Arial";
-    ctx.fillText("GAME OVER", canvas.width / 2 + 5, canvas.height / 2 + 5);
+  ctx.textAlign = "center";
+  ctx.fillStyle = "white";
+  ctx.font = "100px Arial";
+  ctx.fillText("GAME OVER", canvas.width / 2 + 5, canvas.height / 2 + 5);
 }
 
 window.addEventListener("click", (e) => {
@@ -65,10 +66,13 @@ function animate(timestamp) {
     ravens.sort((a, b) => a.width - b.width);
   }
   drawScore();
-  [...ravens, ...explosions].forEach((object) => object.update(deltatime));
+  [...particles, ...ravens, ...explosions].forEach((object) =>
+    object.update(deltatime)
+  );
 
   ravens = ravens.filter((obj) => !obj.markedForDeletion);
   explosions = explosions.filter((obj) => !obj.markedForDeletion);
+  particles = particles.filter((obj) => !obj.markedForDeletion);
   if (!gameOver) requestAnimationFrame(animate);
   else gameOverScreen();
 }

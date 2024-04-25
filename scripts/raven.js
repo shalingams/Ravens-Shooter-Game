@@ -29,6 +29,7 @@ class Raven {
       "," +
       this.randomColor[2] +
       ")";
+    this.hasTail = Math.random() > 0.5;
   }
 
   update(deltatime) {
@@ -43,8 +44,14 @@ class Raven {
       if (this.frame > this.maxFrame) this.frame = 0;
       else this.frame++;
       this.timeSinceFlap = 0;
+      if (this.hasTail) {
+        for (let index = 0; index < 4; index++) {
+          particles.push(new Particle(this.x, this.y, this.width, this.color));
+        }
+        
+      }
     }
-    if(this.x < 0 - this.width) gameOver = true;
+    if (this.x < 0 - this.width) gameOver = true;
     this.draw();
   }
 
